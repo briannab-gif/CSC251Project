@@ -1,57 +1,59 @@
 public class Policy {
    private String policyNumber;
    private String providerName;
-   private PolicyHolder policyHolder; // Links to your new class
+   private PolicyHolder policyHolder; // Handles collaboration (Policy HAS A PolicyHolder)
    
-   private static int policyCount = 0; // Tracks total policies
+   // Static field to track the number of Policy objects created
+   private static int policyCount = 0;
    
    // Default Constructor 
    public Policy() {
       this.policyNumber = "";
       this.providerName = "";
       this.policyHolder = new PolicyHolder();
-      policyCount++; // FIXED: Increments count here
+      policyCount++; // FIXED: Counter increments in default constructor
    }
    
-   // Argument Constructor
-   public Policy(String policyNumber, String providerName, PolicyHolder policyHolder) {
+   // Argument Constructor 
+   public Policy(String policyNumber, String providerName; PolicyHolder policyHolder) {
       this.policyNumber = policyNumber;
       this.providerName = providerName;
-      this.policyHolder = new PolicyHolder(policyHolder);  // Deep copy fixes security hole
-      policyCount++; // FIXED: Increments count here too
+      // FIXED: Avoids "Security Hole" data leaks by creating a deep copy
+      this.policyHolder = new PolicyHolder(PolicyHolder);
+      policyCount++; // FIXED: Counter increments in argument constructor
    }
    
    // Getters and Setters
    public String getPolicyNumber() { return policyNumber; }
    public void setPolicyNumber(String policyNumber) { this.policyNumber = policyNumber; }
    
-   public String getProviderName() { return providerName; 
+   public String getProviderName() { return providerName; }
    public void setProviderName(String providerName) { this.providerName = providerName; }
    
+   // FIXED: Avoids "Security Hole" data leaks by returning a deep copy
    public PolicyHolder getPolicyHolder() { return new PolicyHolder(this.policyHolder); }
    public void setPolicyHolder(PolicyHolder policyHolder) { this.policyHolder = new PolicyHolder(policyHolder); }
    
+   // Static getter to return the total policy count
    public static int getPolicyCount() { return policyCount; }
    
-   // Price Calcuation
+   // Insurance Price Calculation Method
    public double getInsurancePrice() {
       double basePrice = 600.0;
       double additionalFees = 0.0;
       
       if (policyHolder.getAge() > 50) {
-         additionalFees += 75.0;   
+         additionalFees += 75.0;
       }
+      
       if (policyHolder.getSmokingStatus().equalsIgnoreCase("smoker")) {
          additionalFees += 100.0;
       }
-      if (policyHolder.getBMI() > 35) {
-         additionalFees += (policyHolder.getBMI() - 35) * 20;
-      }
       
       return basePrice + additionalFees;
-   }
+   } 
    
-   // toString Method for Project 3
+   // toString Method required for Project 3
    @Override
    public String toString() {
       return "Policy Number: " + policyNumber + "\n" +
@@ -60,20 +62,4 @@ public class Policy {
              String.format("Insurance Price: $%.2f", getInsurancePrice());
    }
 }
-      
-      
-     
-      
-      
-      
    
-   
-   
-      
-         
-    
-    
-        
-        
-    
-    
